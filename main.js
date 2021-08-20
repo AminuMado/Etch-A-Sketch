@@ -10,11 +10,27 @@ const displayGridSizeValue = document.getElementsByClassName("displayGridSizeVal
 function displayGridSize(){
     displayGridSizeValue.textContent = `${gridSizeSlider.value} x ${gridSizeSlider.value}`; 
 }
-displayGridSize();
-gridSizeSlider.addEventListener("input",displayGridSize);
 
-for( let i = 0; i<256;i++){
-    const createDiv = document.createElement("div");
-    mainContainer.appendChild(createDiv);
-    createDiv.classList.add("grid-cell");
+
+function setGridSize(){
+    mainContainer.style.gridTemplateColumns = `repeat(${gridSizeSlider.value},1fr)`
+    mainContainer.style.gridTemplateRows = `repeat(${gridSizeSlider.value},1fr)`
 }
+
+function updateGrid(){
+    displayGridSize();
+    setGridSize();
+    let grids = gridSizeSlider.value;
+    let gridsSquare = grids*grids;
+    
+    for( let i = 0; i<gridsSquare;i++){
+        const createDiv = document.createElement("div");
+        mainContainer.appendChild(createDiv);
+        createDiv.classList.add("grid-cell");    
+    }
+    
+}
+gridSizeSlider.addEventListener("input",updateGrid);
+/* Initialization */
+displayGridSize(); //This updates the text of the grid;
+updateGrid();
