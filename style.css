@@ -12,9 +12,10 @@ body{
     display: grid;
     grid-template-columns:repeat(16,1fr); 
     grid-template-rows: repeat(16,1fr);
-    background-color: green;
-    height: 650px;
-    width: 650px;
+    background-color: white;
+    height: 530px;
+    width: 550px;
+    box-shadow: 0px 0px 12px 2px black;
     
 }
 .grid-cell:hover{

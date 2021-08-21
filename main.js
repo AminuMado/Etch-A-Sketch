@@ -1,16 +1,17 @@
-let gridCount = 0;
-
-
 
 const gridSizeSlider = document.getElementById("gridSizeSlider");
-console.log(gridSizeSlider);
-let gridSize = gridSizeSlider.value;
-const mainContainer = document.getElementsByClassName("main-container")[0];
-const displayGridSizeValue = document.getElementsByClassName("displayGridSizeValue")[0];
+const mainContainer = document.querySelector(".main-container");
+const displayGridSizeValue = document.querySelector(".displayGridSizeValue");
+let grids = gridSizeSlider.value;
+let gridsSquare = '';
+let userColor = 'blue';
+
+
 function displayGridSize(){
     displayGridSizeValue.textContent = `${gridSizeSlider.value} x ${gridSizeSlider.value}`; 
+    
+    
 }
-
 
 function setGridSize(){
     mainContainer.style.gridTemplateColumns = `repeat(${gridSizeSlider.value},1fr)`
@@ -18,19 +19,41 @@ function setGridSize(){
 }
 
 function updateGrid(){
-    displayGridSize();
+    gridsSquare = gridSizeSlider.value*gridSizeSlider.value;
+    console.log(gridsSquare);
     setGridSize();
-    let grids = gridSizeSlider.value;
-    let gridsSquare = grids*grids;
+    clearContainer();
+    createDiv();
     
+}
+
+
+function createDiv(){
     for( let i = 0; i<gridsSquare;i++){
         const createDiv = document.createElement("div");
         mainContainer.appendChild(createDiv);
         createDiv.classList.add("grid-cell");    
     }
+    let innerGrids = document.querySelectorAll(".grid-cell");
+    console.log(innerGrids);
+    innerGrids.forEach(function(grid){
+        grid.addEventListener('mouseover',function(){
+            grid.style.background = `${userColor}`;
+        })
+    })
+}
+function clearContainer(){
+    mainContainer.innerHTML=''; 
     
 }
-gridSizeSlider.addEventListener("input",updateGrid);
+function changeColor(grid){
+    grid.style.background = 'black';
+}
+
+
+gridSizeSlider.addEventListener("input",displayGridSize);
+gridSizeSlider.addEventListener("change",updateGrid);
+
 /* Initialization */
 displayGridSize(); //This updates the text of the grid;
-updateGrid();
+updateGrid(); // This sets the initial grid size;
