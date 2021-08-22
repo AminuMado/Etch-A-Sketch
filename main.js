@@ -10,7 +10,7 @@ const colorPicker = document.getElementById("color-picker");
 let grids = gridSizeSlider.value;
 let gridsSquare = '';
 let userColor = 'black';
-
+let rainbowSwitch =false;
 function displayGridSize(){
     displayGridSizeValue.textContent = `${gridSizeSlider.value} x ${gridSizeSlider.value}`; 
     
@@ -41,6 +41,9 @@ function createDiv(){
     console.log(innerGrids);
     innerGrids.forEach(function(grid){
         grid.addEventListener('mouseover',function(){
+            if (rainbowSwitch){
+                grid.style.background= `hsl(${Math.random() * 360}, 100%, 50%)`;
+            }else
             grid.style.background=`${userColor}`;
         })
     })
@@ -49,7 +52,6 @@ function clearContainer(){
     let innerGrids = document.querySelectorAll(".grid-cell");
     innerGrids.forEach(function(grid){
     grid.style.background=`white`;
-    
     });
 }
 
@@ -58,11 +60,15 @@ function clearContainer(){
 gridSizeSlider.addEventListener("input",displayGridSize);
 gridSizeSlider.addEventListener("change",updateGrid);
 clearBoard.addEventListener("click",clearContainer);
-eraser.addEventListener("click",()=> userColor="white");
-color.addEventListener("click",()=> userColor= "black");
-colorPicker.addEventListener("change",()=> userColor = colorPicker.value);
-
-
+eraser.addEventListener("click",()=> {userColor="white";
+rainbowSwitch=false});
+color.addEventListener("click",()=>{
+    userColor= "black"
+    rainbowSwitch = false;
+} );
+colorPicker.addEventListener("change",()=> {userColor = colorPicker.value
+    rainbowSwitch = false;});
+rainbow.addEventListener("click",()=> rainbowSwitch = true);
 /* Initialization */
 displayGridSize(); //This updates the text of the grid;
 updateGrid(); // This sets the initial grid size;
