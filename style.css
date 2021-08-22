@@ -18,8 +18,8 @@ body{
     box-shadow: 0px 0px 12px 2px black;
     
 }
-.grid-cell:hover{
-    background-color: cornflowerblue;
+.grid-cell{
+    transition: all 90ms ease-in;
 }
 
 

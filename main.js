@@ -2,10 +2,14 @@
 const gridSizeSlider = document.getElementById("gridSizeSlider");
 const mainContainer = document.querySelector(".main-container");
 const displayGridSizeValue = document.querySelector(".displayGridSizeValue");
+const eraser = document.getElementById("eraser");
+const clearBoard = document.getElementById("clear");
+const rainbow = document.getElementById("random-color");
+const color = document.getElementById("color");
+const colorPicker = document.getElementById("color-picker");
 let grids = gridSizeSlider.value;
 let gridsSquare = '';
-let userColor = 'blue';
-
+let userColor = 'black';
 
 function displayGridSize(){
     displayGridSizeValue.textContent = `${gridSizeSlider.value} x ${gridSizeSlider.value}`; 
@@ -20,9 +24,8 @@ function setGridSize(){
 
 function updateGrid(){
     gridsSquare = gridSizeSlider.value*gridSizeSlider.value;
-    console.log(gridsSquare);
     setGridSize();
-    clearContainer();
+    mainContainer.innerHTML=''; 
     createDiv();
     
 }
@@ -38,21 +41,27 @@ function createDiv(){
     console.log(innerGrids);
     innerGrids.forEach(function(grid){
         grid.addEventListener('mouseover',function(){
-            grid.style.background = `${userColor}`;
+            grid.style.background=`${userColor}`;
         })
     })
 }
 function clearContainer(){
-    mainContainer.innerHTML=''; 
+    let innerGrids = document.querySelectorAll(".grid-cell");
+    innerGrids.forEach(function(grid){
+    grid.style.background=`white`;
     
+    });
 }
-function changeColor(grid){
-    grid.style.background = 'black';
-}
+
 
 
 gridSizeSlider.addEventListener("input",displayGridSize);
 gridSizeSlider.addEventListener("change",updateGrid);
+clearBoard.addEventListener("click",clearContainer);
+eraser.addEventListener("click",()=> userColor="white");
+color.addEventListener("click",()=> userColor= "black");
+colorPicker.addEventListener("change",()=> userColor = colorPicker.value);
+
 
 /* Initialization */
 displayGridSize(); //This updates the text of the grid;
